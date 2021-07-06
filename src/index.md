@@ -8,7 +8,7 @@
 
 
 
-![1](mdBook入门/2.jpg)
+![1](index/2.jpg)
 
 
 

@@ -1,6 +1,6 @@
 # Summary
 
- [**mdBook入门**](00_Intro/mdBook入门.md) 
+ [**mdBook入门**](index.md) 
 
 - [**介绍**](00_Intro/介绍.md) 
 - [**软件安装**](00_Intro/安装.md) 
