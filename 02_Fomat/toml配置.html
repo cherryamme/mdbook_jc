@@ -1,0 +1,448 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+
+<head>
+    <!-- Book generated using mdBook -->
+    <meta charset="UTF-8">
+    <title>toml配置 - Jesse的mdBook入门</title>
+    <!-- Custom HTML head -->
+    
+
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="icon" href="../favicon.svg">
+    <link rel="shortcut icon" href="../favicon.png">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/chrome.css">
+    <link rel="stylesheet" href="../css/print.css" media="print">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../fonts/fonts.css">
+    <!-- Highlight.js Stylesheets -->
+    <link rel="stylesheet" href="../highlight.css">
+    <link rel="stylesheet" href="../tomorrow-night.css">
+    <link rel="stylesheet" href="../ayu-highlight.css">
+
+    <!-- Custom theme stylesheets -->
+    <!-- MathJax -->
+    <script async type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+<body>
+    <!-- Provide site root to javascript -->
+    <script type="text/javascript">
+        var path_to_root = "../";
+        var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+    </script>
+
+    <!-- Work around some values being stored in localStorage wrapped in quotes -->
+    <script type="text/javascript">
+        try {
+            var theme = localStorage.getItem('mdbook-theme');
+            var sidebar = localStorage.getItem('mdbook-sidebar');
+
+            if (theme.startsWith('"') && theme.endsWith('"')) {
+                localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+            }
+
+            if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+            }
+        } catch (e) { }
+    </script>
+
+    <!-- Set the theme before any content is loaded, prevents flash -->
+    <script type="text/javascript">
+        var theme;
+        try { theme = localStorage.getItem('mdbook-theme'); } catch (e) { }
+        if (theme === null || theme === undefined) { theme = default_theme; }
+        var html = document.querySelector('html');
+        html.classList.remove('no-js')
+        html.classList.remove('light')
+        html.classList.add(theme);
+        html.classList.add('js');
+    </script>
+
+    <!-- Hide / unhide sidebar before it is displayed -->
+    <script type="text/javascript">
+        var html = document.querySelector('html');
+        var sidebar = 'hidden';
+        if (document.body.clientWidth >= 1080) {
+            try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch (e) { }
+            sidebar = sidebar || 'visible';
+        }
+        html.classList.remove('sidebar-visible');
+        html.classList.add("sidebar-" + sidebar);
+    </script>
+
+    <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <div class="sidebar-scrollbox">
+            <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">mdBook入门</a></li><li class="chapter-item expanded "><a href="../00_Intro/介绍.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li class="chapter-item expanded "><a href="../00_Intro/安装.html"><strong aria-hidden="true">2.</strong> 软件安装</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 常用命令</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../01_Command/init命令.html"><strong aria-hidden="true">3.1.</strong> init命令</a></li><li class="chapter-item expanded "><a href="../01_Command/build命令.html"><strong aria-hidden="true">3.2.</strong> build命令</a></li><li class="chapter-item expanded "><a href="../01_Command/watch命令.html"><strong aria-hidden="true">3.3.</strong> watch命令</a></li><li class="chapter-item expanded "><a href="../01_Command/clean命令.html"><strong aria-hidden="true">3.4.</strong> clean命令</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 参数配置</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../02_Fomat/Summary.md格式.html"><strong aria-hidden="true">4.1.</strong> Summary配置</a></li><li class="chapter-item expanded "><a href="../02_Fomat/Theme文件配置.html"><strong aria-hidden="true">4.2.</strong> Theme文件配置</a></li><li class="chapter-item expanded "><a href="../02_Fomat/toml配置.html" class="active"><strong aria-hidden="true">4.3.</strong> toml配置</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 进阶</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../03_Customize/定义编辑器.html"><strong aria-hidden="true">5.1.</strong> 定义编辑器.md</a></li><li class="chapter-item expanded "><a href="../03_Customize/主题自定义.html"><strong aria-hidden="true">5.2.</strong> 主题自定义</a></li><li class="chapter-item expanded "><a href="../03_Customize/页面图标.html"><strong aria-hidden="true">5.3.</strong> 页面图标</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><li class="part-title">我的配置</li><li class="chapter-item expanded "><a href="../04_Mymdbook/summary.html"><strong aria-hidden="true">6.</strong> summary</a></li><li class="chapter-item expanded "><a href="../04_Mymdbook/toml.html"><strong aria-hidden="true">7.</strong> toml</a></li><li class="chapter-item expanded "><a href="../04_Mymdbook/Theme.html"><strong aria-hidden="true">8.</strong> Theme</a></li></ol>
+        </div>
+        <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+    </nav>
+
+    <div id="page-wrapper" class="page-wrapper">
+
+        <div class="page">
+            
+            <div id="menu-bar-hover-placeholder"></div>
+            <div id="menu-bar" class="menu-bar sticky bordered">
+                <div class="left-buttons">
+                    <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents"
+                        aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <button id="theme-toggle" class="icon-button" type="button" title="Change theme"
+                        aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                        <i class="fa fa-paint-brush"></i>
+                    </button>
+                    <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="lfe-pdp">LFE PDP</button></li>
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="light">Light (default)</button></li>
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="rust">Rust</button></li>
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="coal">Coal</button></li>
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="navy">Navy</button></li>
+                        <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button>
+                        </li>
+                    </ul>
+                    <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)"
+                        aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S"
+                        aria-controls="searchbar">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+
+                <h1 class="menu-title">Jesse的mdBook入门</h1>
+
+                <div class="right-buttons">
+                    <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <i id="print-button" class="fa fa-print"></i>
+                    </a>
+                    <a href="https://github.com/cherryamme/mdbook_jc" title="Git repository" aria-label="Git repository">
+                        <i id="git-repository-button" class="fa fa-github"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div id="search-wrapper" class="hidden">
+                <form id="searchbar-outer" class="searchbar-outer">
+                    <input type="search" name="search" id="searchbar" name="searchbar"
+                        placeholder="Search this book ..." aria-controls="searchresults-outer"
+                        aria-describedby="searchresults-header">
+                </form>
+                <div id="searchresults-outer" class="searchresults-outer hidden">
+                    <div id="searchresults-header" class="searchresults-header"></div>
+                    <ul id="searchresults">
+                    </ul>
+                </div>
+            </div>
+            <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+            <script type="text/javascript">
+                document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                Array.from(document.querySelectorAll('#sidebar a')).forEach(function (link) {
+                    link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                });
+            </script>
+
+            <div id="content" class="content">
+                <main>
+                    <h1 id="toml配置"><a class="header" href="#toml配置">toml配置</a></h1>
+<p>您可以在 <code>book.toml </code>文件中配置图书的参数。</p>
+<p>这是一个 <code>book.toml</code>文件示例，如下所示：</p>
+<pre><code class="language-toml">[book]
+title = &quot;Example book&quot;
+author = &quot;John Doe&quot;
+description = &quot;The example book covers examples.&quot;
+
+[build]
+build-dir = &quot;my-example-book&quot;
+create-missing = false
+
+[preprocessor.index]
+
+[preprocessor.links]
+
+[output.html]
+additional-css = [&quot;custom.css&quot;]
+
+[output.html.search]
+limit-results = 15
+</code></pre>
+<h2 id="支持的配置选项"><a class="header" href="#支持的配置选项">支持的配置选项</a></h2>
+<p>重要的是要注意到，配置中指定的<strong>任何</strong>相对路径，都是相对于配置文件所在的书籍的根目录.</p>
+<h3 id="通用元数据book"><a class="header" href="#通用元数据book">通用元数据——[Book]</a></h3>
+<p>这是有关您图书的一般</p>
+<table><thead><tr><th>信息</th><th>描述</th></tr></thead><tbody>
+<tr><td><strong>title</strong></td><td>这本书的标题</td></tr>
+<tr><td><strong>author</strong></td><td>本书的作者</td></tr>
+<tr><td><strong>description</strong></td><td>该书的描述,作为元信息,添加在每页 html 的<code>&lt;head&gt;</code></td></tr>
+<tr><td><strong>src</strong></td><td>默认情况下,源目录位于名为<code>src</code>的目录中(在根文件夹)。但这<code>src</code>是可配置的，就在<code>book.toml</code>。</td></tr>
+<tr><td><strong>language:</strong></td><td>国家语言, 例如用在网页的 <code>&lt;html lang=&quot;en&quot;&gt;</code> 属性。</td></tr>
+</tbody></table>
+<p><strong>book.toml</strong></p>
+<pre><code class="language-toml">[book]
+title = &quot;Example book&quot;
+authors = [&quot;John Doe&quot;, &quot;Jane Doe&quot;]
+description = &quot;The example book covers examples.&quot;
+src = &quot;my-src&quot;  # 源文件夹，用 `root/my-src` 替代 `root/src`
+language = &quot;zh-CN&quot;
+</code></pre>
+<h3 id="build-选项build"><a class="header" href="#build-选项build">Build 选项——[Build]</a></h3>
+<p>这可以控制您图书的构建过程.</p>
+<ul>
+<li>
+<p><strong>build-dir</strong> | 放置渲染图书的目录。默认情况下在根目录的<code>book/</code>:</p>
+</li>
+<li>
+<p><strong>create-missing</strong> | 默认情况(<code>create-missing = true</code>)下，在书籍建成时，会创建<code>SUMMARY.md</code>中缺失的文件。如果是<code>false</code>，则有文件不存在,那么构建过程将以错误退出。</p>
+</li>
+<li>
+<p><strong>use-default-preprocessors</strong> | 设为 <code>false</code>，会禁用(<code>links</code>&amp;<code>index</code>)的默认预处理器。</p>
+<ul>
+<li>
+<p>如果您通过配置文件声明了，相同的和/或其他预处理器,由它们主导.</p>
+</li>
+<li>
+<p>为清楚起见,没有预处理器配置,默认<code>links</code>和<code>index</code>运行.设置<code>use-default-preprocessors = false</code>，将禁用这些默认预处理器运行.</p>
+</li>
+<li>
+<p>若添加<code>[preprocessor.links]</code>，那无论如何,都能确保<code>use-default-preprocessors</code>运行<code>links</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>默认情况下,以下预处理器运行，并包含:</p>
+<ul>
+<li><code>links</code>:扩展章节中<code>{{ #playpen }}</code>和<code>{{ #include }}</code>控制条，能帮助引入文件的内容.</li>
+<li><code>index</code>:将所有名为<code>README.md</code>的章节文件转换<code>index.md</code>。也就是说,所有<code>README.md</code>将被渲染成<code>index.html</code>，在渲染的书中.</li>
+</ul>
+<p><strong>book.toml</strong></p>
+<pre><code class="language-toml">[build]
+build-dir = &quot;build&quot;
+create-missing = false
+
+[preprocessor.links]
+
+[preprocessor.index]
+</code></pre>
+<h3 id="html-渲染器"><a class="header" href="#html-渲染器">HTML 渲染器</a></h3>
+<p>HTML 渲染器也有几个选项。渲染器的所有选项都需要在 TOML 表下指定。<code>[output.html]</code></p>
+<p>提供以下配置选项：</p>
+<ul>
+<li><strong>theme:</strong> <strong>mdBook</strong>附带了默认主题和它所需的所有资源文件。但是，如果设置此选项，mdBook 将选择性地用指定文件夹中找到的主题文件覆盖主题文件。</li>
+<li><strong>default-theme:</strong> 主题配色方案。默认为 ：<code>light</code></li>
+<li><strong>preferred-dark-theme:</strong> 默认的黑暗主题。默认为 ：  <code>navy</code></li>
+<li><strong>curly-quotes:</strong> 将直引号转换为反引号,代码块中的除外。默认为 ：<code>false</code></li>
+<li><strong>mathjax-support:</strong> 添加对 <a href="https://rust-lang.github.io/mdBook/format/mathjax.html">MathJax</a>的支持。 默认为 ：<code>false</code></li>
+<li><strong>copy-fonts:</strong> 将字体.css和各自的字体文件复制到输出目录中，并在默认主题中使用它们. 默认为 ：<code>true</code></li>
+<li><strong>google-analytics:</strong> 如果您使用 Google 分析，此选项只需在配置文件中指定 ID 即可启用它。</li>
+<li><strong>additional-css:</strong> 这些样式表将在默认样板之后加载，以便通过后续改变样式。</li>
+<li><strong>additional-js:</strong> 如果您需要在不删除当前行为的情况下在书中添加一些行为，则可以指定一组 JavaScript 文件，这些文件将与默认文件一起加载。</li>
+<li><strong>print:</strong> 配置打印设置的子表。默认情况下，mdBook增加了将该书打印为单页的支持。使用书右上角的打印图标访问此问题。</li>
+<li><strong>no-section-label:</strong> 默认情况下，mdBook在内容表列中添加节标签。例如，&quot;1&quot;，&quot;2.1&quot;。将此选项设置为&quot;禁用这些标签&quot;。默认为 ：<code>false</code></li>
+<li><strong>fold:</strong> 用于配置侧边栏部分折叠行为的子表。</li>
+<li><strong>playground:</strong> 用于配置各种playground设置的子表。</li>
+<li><strong>search:</strong> 用于配置浏览器内搜索功能的子表。mdBook必须在启用该功能时进行编译（默认情况下为）：<code>search</code></li>
+<li><strong>git-repository-url:</strong> 给这本书的git存储库的网址。如果提供图标链接，将在本书的菜单栏中输出。</li>
+<li><strong>git-repository-icon:</strong> 用于 git 存储库链接的字体操作图标类。默认为 ：<code>fa-github</code></li>
+<li><strong>edit-url-template:</strong> 编辑网址模板时，显示&quot;建议编辑&quot;按钮，以便直接跳转到当前查看的页面编辑。对于 gitHub 项目将其设置为或用于 Bitbucket 项目将其设置为 {路径&quot; 将被存储库中文件的完整路径替换的位置。.<code>https://github.com/&lt;owner&gt;/&lt;repo&gt;/edit/master/{path}``https://bitbucket.org/&lt;owner&gt;/&lt;repo&gt;/src/master/{path}?mode=edit</code></li>
+<li><strong>redirect:</strong> 用于在移动页面时生成重定向的子表。该表包含关键值对，其中密钥是需要创建重定向文件的位置，作为生成目录的绝对路径（例如）。值可以是浏览器应导航到的任何有效 URI（例如，或）。<code>/appendices/bibliography.html``https://rust-lang.org/``/overview.html``../bibliography.html</code></li>
+<li><strong>input-404:</strong> 用于丢失文件的减价文件的名称。相应的输出文件将相同，扩展将替换为。 默认为 ：<code>html``404.md</code></li>
+<li><strong>site-url:</strong> 将托管该书的网址。这需要确保 404 文件中的导航链接和脚本/css 导入工作正常，即使在以子标题访问网址时也是如此。默认为 ：<code>/</code></li>
+<li><strong>cname:</strong> 将托管您的书的 DNS 子域或顶点域。根据 GitHub 页面的要求，此字符串将写入网站根部中名为 CNAME 的文件 (see <a href="https://docs.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site"><em>Managing a custom domain for your GitHub Pages site</em></a>).</li>
+</ul>
+<h4 id="outputhtmlprint"><a class="header" href="#outputhtmlprint">[output.html.print]</a></h4>
+<ul>
+<li><strong>enable:</strong> 启用打印支持。默认为 ：<code>false``true</code></li>
+</ul>
+<h4 id="outputhtmlfold"><a class="header" href="#outputhtmlfold">[output.html.fold]</a></h4>
+<ul>
+<li><strong>enable:</strong> 启用部分折叠。关闭时，所有折叠均为打开。 默认为 ：<code>false</code></li>
+<li><strong>level:</strong> 折叠区域越高，开放区域就越多。当级别为 0 时，所有折叠均关闭。默认为 ：<code>0</code></li>
+</ul>
+<h4 id="outputhtmlplayground"><a class="header" href="#outputhtmlplayground">[output.html.playground]</a></h4>
+<ul>
+<li><strong>editable:</strong> 允许编辑源代码。默认为 ：<code>false</code></li>
+<li><strong>copyable:</strong> 在代码片段上显示副本按钮。默认为 ：<code>true</code></li>
+<li><strong>copy-js:</strong> 将编辑器的 JavaScript 文件复制到输出目录。 默认为 ：<code>true</code></li>
+<li><strong>line-numbers</strong> 在代码的可编辑部分显示行号。 默认为 ：<code>editable``copy-js``true``false</code></li>
+</ul>
+<h4 id="outputhtmlsearch"><a class="header" href="#outputhtmlsearch">[output.html.search]</a></h4>
+<ul>
+<li><strong>enable:</strong> 启用搜索功能。 默认为 ：<code>true</code></li>
+<li><strong>limit-results:</strong> 搜索结果的最大数量。默认为 ：<code>30</code></li>
+<li><strong>teaser-word-count:</strong> 用于搜索结果显示的单词数。默认为 ：<code>30</code></li>
+<li><strong>use-boolean-and:</strong> 定义多个搜索词之间的逻辑链接。如果是真的，所有搜索词都必须出现在每个结果中。 默认为 ：<code>false</code></li>
+<li><strong>boost-title:</strong> 如果标题中出现搜索字，则搜索结果分数的提升因子。默认为 ：<code>2</code></li>
+<li><strong>boost-hierarchy:</strong> 如果搜索字出现在等级中，则搜索结果分数的提升因子。等级包含父文档的所有标题和所有父标题。默认为 ：<code>1</code></li>
+<li><strong>boost-paragraph:</strong> 如果文本中出现搜索字，则搜索结果分数的提升因子。 默认为 ：<code>1</code></li>
+<li><strong>expand:</strong> 如果搜索应匹配较长的结果，则确实如此，例如搜索应匹配。默认为 ：<code>micro``microwave``true</code></li>
+<li><strong>heading-split-level:</strong> S搜索结果将链接到包含结果的文档的一部分。文档按此级别或更少的标题分成几个部分。 默认为 ： (<code>3``### This is a level 3 heading</code>)</li>
+<li><strong>copy-js:</strong> 将JavaScript文件复制到输出目录中以进行搜索实现。默认为 ：<code>true</code></li>
+</ul>
+<hr />
+<h2 id="tips"><a class="header" href="#tips">Tips</a></h2>
+<p>这显示了<strong>book.toml</strong>所有可用的 HTML 输出选项:</p>
+<pre><code class="language-toml">[book]
+title = &quot;Example book&quot;
+authors = [&quot;John Doe&quot;, &quot;Jane Doe&quot;]
+description = &quot;The example book covers examples.&quot;
+
+[output.html]
+theme = &quot;my-theme&quot;
+default-theme = &quot;light&quot;
+preferred-dark-theme = &quot;navy&quot;
+curly-quotes = true
+mathjax-support = false
+copy-fonts = true
+google-analytics = &quot;UA-123456-7&quot;
+additional-css = [&quot;custom.css&quot;, &quot;custom2.css&quot;]
+additional-js = [&quot;custom.js&quot;]
+no-section-label = false
+git-repository-url = &quot;https://github.com/rust-lang/mdBook&quot;
+git-repository-icon = &quot;fa-github&quot;
+edit-url-template = &quot;https://github.com/rust-lang/mdBook/edit/master/guide/{path}&quot;
+site-url = &quot;/example-book/&quot;
+cname = &quot;myproject.rs&quot;
+input-404 = &quot;not-found.md&quot;
+
+[output.html.print]
+enable = true
+
+[output.html.fold]
+enable = false
+level = 0
+
+[output.html.playground]
+editable = false
+copy-js = true
+line-numbers = false
+
+[output.html.search]
+enable = true
+limit-results = 30
+teaser-word-count = 30
+use-boolean-and = true
+boost-title = 2
+boost-hierarchy = 1
+boost-paragraph = 1
+expand = true
+heading-split-level = 3
+copy-js = true
+
+[output.html.redirect]
+&quot;/appendices/bibliography.html&quot; = &quot;https://rustc-dev-guide.rust-lang.org/appendix/bibliography.html&quot;
+&quot;/other-installation-methods.html&quot; = &quot;../infra/other-installation-methods.html&quot;[book]
+title = &quot;Example book&quot;
+authors = [&quot;John Doe&quot;, &quot;Jane Doe&quot;]
+description = &quot;The example book covers examples.&quot;
+
+[output.html]
+theme = &quot;my-theme&quot;
+default-theme = &quot;light&quot;
+curly-quotes = true
+mathjax-support = false
+google-analytics = &quot;123456&quot;
+additional-css = [&quot;custom.css&quot;, &quot;custom2.css&quot;]
+additional-js = [&quot;custom.js&quot;]
+no-section-label = false
+git-repository-url = &quot;https://github.com/rust-lang-nursery/mdBook&quot;
+git-repository-icon = &quot;fa-github&quot;
+
+[output.html.playpen]
+editable = false # true使代码块可编辑
+copy-js = true
+
+[output.html.search]
+enable = true
+limit-results = 30
+teaser-word-count = 30
+use-boolean-and = true
+boost-title = 2
+boost-hierarchy = 1
+boost-paragraph = 1
+expand = true
+heading-split-level = 3
+copy-js = true
+</code></pre>
+
+                </main>
+
+                <nav class="nav-wrapper" aria-label="Page navigation">
+                    <!-- Mobile navigation buttons -->
+                    <a rel="prev" href="../02_Fomat/Theme文件配置.html" class="mobile-nav-chapters previous"
+                        title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../03_Customize/定义编辑器.html" class="mobile-nav-chapters next"
+                        title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                    <div style="clear: both"></div>
+                </nav>
+            </div>
+        </div>
+
+        <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            <a rel="prev" href="../02_Fomat/Theme文件配置.html" class="nav-chapters previous" title="Previous chapter"
+                aria-label="Previous chapter" aria-keyshortcuts="Left">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a rel="next" href="../03_Customize/定义编辑器.html" class="nav-chapters next" title="Next chapter"
+                aria-label="Next chapter" aria-keyshortcuts="Right">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </nav>
+
+    </div>
+
+    <!-- Google Analytics Tag -->
+    <script type="text/javascript">
+        var localAddrs = ["localhost", "127.0.0.1", ""];
+
+        // make sure we don't activate google analytics if the developer is
+        // inspecting the book locally...
+        if (localAddrs.indexOf(document.location.hostname) === -1) {
+            (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'G-2EVQ2574ZB', 'auto');
+            ga('send', 'pageview');
+        }
+    </script>
+    <script type="text/javascript">
+        window.playground_copyable = true;
+    </script>
+    <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Custom JS scripts -->
+</body>
+
+</html>
