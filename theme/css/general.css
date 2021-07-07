@@ -45,23 +45,20 @@ h4, h5 { margin-top: 2em; }
     margin-top: 1em;
 }
 
-h1:target::before,
-h2:target::before,
-h3:target::before,
-h4:target::before,
-h5:target::before,
-h6:target::before {
+h1 a.header:target::before,
+h2 a.header:target::before,
+h3 a.header:target::before,
+h4 a.header:target::before {
     display: inline-block;
     content: "»";
     margin-left: -30px;
     width: 30px;
 }
 
-/* This is broken on Safari as of version 14, but is fixed
-   in Safari Technology Preview 117 which I think will be Safari 14.2.
-   https://bugs.webkit.org/show_bug.cgi?id=218076
-*/
-:target {
+h1 a.header:target,
+h2 a.header:target,
+h3 a.header:target,
+h4 a.header:target {
     scroll-margin-top: calc(var(--menu-bar-height) + 0.5em);
 }
 
@@ -92,7 +89,7 @@ h6:target::before {
 .content ul { line-height: 1.45em; }
 .content a { text-decoration: none; }
 .content a:hover { text-decoration: underline; }
-.content img, .content video { max-width: 100%; }
+.content img { max-width: 100%; }
 .content .header:link,
 .content .header:visited {
     color: var(--fg);
@@ -174,4 +171,196 @@ blockquote {
     color: var(--sidebar-fg);
     margin: 5px 0px;
     font-weight: bold;
+}
+
+
+/* 
+ * 
+ * Items introduced by the LFE Theme
+ *
+ */
+
+code,
+:not(pre):not(a)>.hljs {
+    background-color: var(--inline-code-background-color);
+    color: var(--inline-code-color);
+}
+
+.alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
+}
+
+.alert-heading {
+    color: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+.alert-link {
+    font-weight: 700;
+}
+
+/* Primary */
+
+.alert-primary {
+    color: var(--alert-primary-fg);
+    background-color: var(--alert-primary-bg);
+    border-color: var(--alert-primary-border);
+}
+
+.alert-primary hr {
+    border-top-color: var(--alert-primary-hr);
+}
+
+.alert-primary .alert-link {
+    color: var(--alert-primary-link);
+}
+
+.alert-primary,
+.alert-primary>th,
+.alert-primary>td {
+    background-color: var(--alert-primary-bg);
+}
+
+/* Secondary */
+
+.alert-secondary {
+    color: var(--alert-secondary-fg);
+    background-color: var(--alert-secondary-bg);
+    border-color: var(--alert-secondary-border);
+}
+
+.alert-secondary hr {
+    border-top-color: var(--alert-secondary-hr);
+}
+
+.alert-secondary .alert-link {
+    color: var(--alert-secondary-link);
+}
+
+.alert-secondary,
+.alert-secondary>th,
+.alert-secondary>td {
+    background-color: var(--alert-secondary-bg);
+}
+
+/* Success */
+
+.alert-success {
+    color: var(--alert-success-fg);
+    background-color: var(--alert-success-bg);
+    border-color: var(--alert-success-border);
+}
+
+.alert-success hr {
+    border-top-color: var(--alert-success-hr);
+}
+
+.alert-success .alert-link {
+    color: var(--alert-success-link);
+}
+
+.alert-success,
+.alert-success>th,
+.alert-success>td {
+    background-color: var(--alert-success-bg);
+}
+
+/* Info */
+
+.alert-info {
+    color: var(--alert-info-fg);
+    background-color: var(--alert-info-bg);
+    border-color: var(--alert-info-border);
+}
+
+.alert-info hr {
+    border-top-color: var(--alert-info-hr);
+}
+
+.alert-info .alert-link {
+    color: var(--alert-info-link);
+}
+
+.alert-info,
+.alert-info>th,
+.alert-info>td {
+    background-color: var(--alert-info-bg);
+}
+
+/* Warning */
+
+.alert-warning {
+    color: var(--alert-warning-fg);
+    background-color: var(--alert-warning-bg);
+    border-color: var(--alert-warning-border);
+}
+
+.alert-warning hr {
+    border-top-color: var(--alert-warning-hr);
+}
+
+.alert-warning .alert-link {
+    color: var(--alert-warning-link);
+}
+
+.alert-warning,
+.alert-warning>th,
+.alert-warning>td {
+    background-color: var(--alert-warning-bg);
+}
+
+/* Danger */
+
+.alert-danger {
+    color: var(--alert-danger-fg);
+    background-color: var(--alert-danger-bg);
+    border-color: var(--alert-danger-border);
+}
+
+.alert-danger hr {
+    border-top-color: var(--alert-danger-hr);
+}
+
+.alert-danger .alert-link {
+    color: var(--alert-danger-link);
+}
+
+.alert-danger,
+.alert-danger>th,
+.alert-danger>td {
+    background-color: var(--alert-danger-bg);
+}
+
+/* Footnotes */
+
+.footnotes {
+    font-size: 10pt;
+    padding-top: 2em;
+    margin-top: 2em;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.footnotes ol,
+.footnotes ol li {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0.6em;
+    margin-right: 0;
+}
+
+.footnotes ol {
+    /* margin-left: -1em; */
+}
+
+.footnotes hr {
+    border: 0;
+    border-bottom: solid 1px #666;
 }
