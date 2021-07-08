@@ -30,6 +30,7 @@ copy-js = true
 
 [output.html]
 site-url = "/mdbook_jc/"
+no-section-label = true
 mathjax-support = true
 google-analytics = "G-2EVQ2574ZB"
 git-repository-url = "https://github.com/cherryamme/mdbook_jc"
